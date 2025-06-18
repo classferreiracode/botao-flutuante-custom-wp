@@ -105,9 +105,9 @@ add_action('wp_footer', function () {
     echo "<div id='whatsapp-float' style='{$style_pos}'>";
     echo "<button onclick='openForm()'>";
     if ($imagem) {
-        echo "<img src='{$imagem}' alt='Ícone' style='height:32px;width:32px;'>";
+        echo "<img src='{$imagem}' alt='Ícone' style='height:96px;width:96px;'>";
     } else {
-        echo "💬 Formulário";
+        echo "<img src='https://analiza.amzmp.com.br/icones/icons8-whatsapp-96.png' alt='Ícone' style='height:96px;width:96px;'>";
     }
     echo "</button></div>";
 
