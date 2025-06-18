@@ -3,7 +3,7 @@
 Plugin Name: Botão WhatsApp com Formulário Avançado
 Plugin URI: https://github.com/classferreiracode/botao-flutuante-custom-wp
 Description: Formulário flutuante customizável com envio externo ou WhatsApp, e atualizações via GitHub.
-Version: 1.4.1
+Version: 1.4.2
 Author: classFerreiraCode
 Author URI: https://github.com/classferreiracode/
 */
@@ -73,10 +73,10 @@ function botao_whatsapp_v6_config_page()
                     <th><label for="botao_whatsapp_v6_fields_json">Campos do Formulário (JSON)</label></th>
                     <td>
                         <textarea name="botao_whatsapp_v6_fields_json" rows="12" class="large-text code"><?php echo esc_textarea(get_option('botao_whatsapp_v6_fields_json', '[
-  {"id": "first_name", "label": "Primeiro Nome", "type": "text", "required": false},
+  {"id": "first_name", "label": "Primeiro Nome", "type": "text", "required": true},
   {"id": "last_name", "label": "Sobrenome", "type": "text", "required": true},
-  {"id": "phone_mobile", "label": "Telefone", "type": "text", "required": false},
-  {"id": "email1", "label": "Email", "type": "email", "required": false},
+  {"id": "phone_mobile", "label": "Telefone", "type": "text", "required": true},
+  {"id": "email1", "label": "Email", "type": "email", "required": true},
   {"id": "campaign_id", "type": "hidden", "value": "4d0109a5-fdc3-14c0-4672-6842e46e0ed8"},
   {"id": "assigned_user_id", "type": "hidden", "value": "1"},
   {"id": "moduleDir", "type": "hidden", "value": "Leads"}
@@ -111,9 +111,9 @@ add_action('wp_footer', function () {
     echo "<div id='whatsapp-float' style='{$style_pos}'>";
     echo "<a onclick='openForm()' style='cursor:pointer;'>";
     if ($imagem) {
-        echo "<img src='{$imagem}' alt='Ícone' style='height:96px;width:96px;'>";
+        echo "<img src='{$imagem}' alt='Ícone' style='height:72px;width:72px;'>";
     } else {
-        echo "<img src='https://analiza.amzmp.com.br/icones/icons8-whatsapp-96.png' alt='Ícone' style='height:96px;width:96px;'>";
+        echo "<img src='https://analiza.amzmp.com.br/icones/icons8-whatsapp-96.png' alt='Ícone' style='height:72px;width:72px;'>";
     }
     echo "</a></div>";
 
@@ -162,9 +162,6 @@ add_action('wp_footer', function () {
         }
 
         #whatsapp-float img {
-            height: 96px;
-            /* ajuste o tamanho conforme necessário */
-            width: 96px;
             vertical-align: middle;
         }
 
