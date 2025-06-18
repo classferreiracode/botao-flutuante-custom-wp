@@ -3,7 +3,7 @@
 Plugin Name: Botão WhatsApp com Formulário Avançado
 Plugin URI: https://github.com/classferreiracode/botao-flutuante-custom-wp
 Description: Formulário flutuante customizável com envio externo ou WhatsApp, e atualizações via GitHub.
-Version: 1.2
+Version: 1.3
 Author: classFerreiraCode
 Author URI: https://github.com/classferreiracode/
 */
@@ -95,7 +95,7 @@ add_action('wp_footer', function () {
     $action = esc_url(get_option('botao_whatsapp_v6_action_url', '#'));
     $posicao = get_option('botao_whatsapp_v6_posicao', 'bottom-right');
     $imagem = esc_url(get_option('botao_whatsapp_v6_imagem', ''));
-    $msg = esc_url(get_option('botao_whatsapp_v6_texto_msg', ''));
+    $msg = urlencode(get_option('botao_whatsapp_v6_texto_msg', 'Olá, gostaria de mais informações!'));
     $fields_json = get_option('botao_whatsapp_v6_fields_json', '[]');
     $fields = json_decode($fields_json, true);
     if (!is_array($fields)) return;
@@ -140,11 +140,8 @@ add_action('wp_footer', function () {
             }
         }
     }
-    if ($msg) {
-        echo "<input type='hidden' name='redirect_url' id='redirect_url' value='https://api.whatsapp.com/send/?phone=551935145050&text={$msg}&type=phone_number&app_absent=0'>";
-    } else {
-        echo "<input type='hidden' name='redirect_url' id='redirect_url' value='https://api.whatsapp.com/send/?phone=551935145050&text=Olá,+gostaria+de+mais+informações!&type=phone_number&app_absent=0'>";
-    }
+
+    echo "<input type='hidden' name='redirect_url' id='redirect_url' value='https://api.whatsapp.com/send/?phone=551935145050&text={$msg}&type=phone_number&app_absent=0'>";
 
     echo "<button type='submit'>Enviar</button>
           <button type='button' onclick='closeForm()' style='background:#ccc;'>Fechar</button>
