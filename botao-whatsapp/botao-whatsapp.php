@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Botão WhatsApp com Formulário Avançado
-Plugin URI: https://github.com/classferreiracode/botao-whatsapp
+Plugin URI: https://github.com/classferreiracode/botao-flutuante-custom-wp
 Description: Formulário flutuante customizável com envio externo ou WhatsApp, e atualizações via GitHub.
 Version: 1.1
 Author: classFerreiraCode
@@ -74,7 +74,8 @@ function botao_whatsapp_v6_config_page()
   {"id": "email1", "label": "Email", "type": "email", "required": false},
   {"id": "campaign_id", "type": "hidden", "value": "4d0109a5-fdc3-14c0-4672-6842e46e0ed8"},
   {"id": "assigned_user_id", "type": "hidden", "value": "1"},
-  {"id": "moduleDir", "type": "hidden", "value": "Leads"}
+  {"id": "moduleDir", "type": "hidden", "value": "Leads"},
+  {"id": "redirect_url", "type": "hidden", "value": "https://api.whatsapp.com/send/?phone=551935145050&text=Olá,+gostaria+de+mais+informações+sobre+Sexagem+Fetal&type=phone_number&app_absent=0"}
 ]')); ?></textarea>
                     </td>
                 </tr>
