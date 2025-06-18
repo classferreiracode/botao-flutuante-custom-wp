@@ -3,7 +3,7 @@
 Plugin Name: Botão WhatsApp com Formulário Avançado
 Plugin URI: https://github.com/classferreiracode/botao-flutuante-custom-wp
 Description: Formulário flutuante customizável com envio externo ou WhatsApp, e atualizações via GitHub.
-Version: 1.1
+Version: 1.2
 Author: classFerreiraCode
 Author URI: https://github.com/classferreiracode/
 */
@@ -31,6 +31,7 @@ add_action('admin_init', function () {
     register_setting('botao_whatsapp_v6_options', 'botao_whatsapp_v6_fields_json');
     register_setting('botao_whatsapp_v6_options', 'botao_whatsapp_v6_posicao');
     register_setting('botao_whatsapp_v6_options', 'botao_whatsapp_v6_imagem');
+    register_setting('botao_whatsapp_v6_options', 'botao_whatsapp_v6_texto_msg');
 });
 
 function botao_whatsapp_v6_config_page()
@@ -51,6 +52,10 @@ function botao_whatsapp_v6_config_page()
                 <tr>
                     <th><label for="botao_whatsapp_v6_imagem">URL da Imagem do Botão</label></th>
                     <td><input type="text" name="botao_whatsapp_v6_imagem" value="<?php echo esc_attr(get_option('botao_whatsapp_v6_imagem')); ?>" class="regular-text" /></td>
+                </tr>
+                <tr>
+                    <th><label for="botao_whatsapp_v6_texto_msg">Texto da Mensagem no WhatsApp</label></th>
+                    <td><input type="text" name="botao_whatsapp_v6_texto_msg" value="<?php echo esc_attr(get_option('botao_whatsapp_v6_texto_msg')); ?>" class="regular-text" /></td>
                 </tr>
                 <tr>
                     <th><label for="botao_whatsapp_v6_posicao">Posição do Botão</label></th>
@@ -74,8 +79,7 @@ function botao_whatsapp_v6_config_page()
   {"id": "email1", "label": "Email", "type": "email", "required": false},
   {"id": "campaign_id", "type": "hidden", "value": "4d0109a5-fdc3-14c0-4672-6842e46e0ed8"},
   {"id": "assigned_user_id", "type": "hidden", "value": "1"},
-  {"id": "moduleDir", "type": "hidden", "value": "Leads"},
-  {"id": "redirect_url", "type": "hidden", "value": "https://api.whatsapp.com/send/?phone=551935145050&text=Olá,+gostaria+de+mais+informações+sobre+Sexagem+Fetal&type=phone_number&app_absent=0"}
+  {"id": "moduleDir", "type": "hidden", "value": "Leads"}
 ]')); ?></textarea>
                     </td>
                 </tr>
@@ -91,6 +95,7 @@ add_action('wp_footer', function () {
     $action = esc_url(get_option('botao_whatsapp_v6_action_url', '#'));
     $posicao = get_option('botao_whatsapp_v6_posicao', 'bottom-right');
     $imagem = esc_url(get_option('botao_whatsapp_v6_imagem', ''));
+    $msg = esc_url(get_option('botao_whatsapp_v6_texto_msg', ''));
     $fields_json = get_option('botao_whatsapp_v6_fields_json', '[]');
     $fields = json_decode($fields_json, true);
     if (!is_array($fields)) return;
@@ -116,6 +121,7 @@ add_action('wp_footer', function () {
     echo "<form id='WebToLeadForm' action='{$action}' method='POST' target='_blank'>";
     echo "<h3>Fale conosco</h3>";
 
+
     foreach ($fields as $field) {
         $id = esc_attr($field['id']);
         $label = $field['label'] ?? '';
@@ -134,6 +140,11 @@ add_action('wp_footer', function () {
             }
         }
     }
+    if ($msg) {
+        echo "<input type='hidden' name='redirect_url' id='redirect_url' value='https://api.whatsapp.com/send/?phone=551935145050&text={$msg}&type=phone_number&app_absent=0'>";
+    } else {
+        echo "<input type='hidden' name='redirect_url' id='redirect_url' value='https://api.whatsapp.com/send/?phone=551935145050&text=Olá,+gostaria+de+mais+informações!&type=phone_number&app_absent=0'>";
+    }
 
     echo "<button type='submit'>Enviar</button>
           <button type='button' onclick='closeForm()' style='background:#ccc;'>Fechar</button>
@@ -146,17 +157,17 @@ add_action('wp_footer', function () {
         }
 
         #whatsapp-float button {
-            background: #25D366;
-            color: white;
+            background: transparent !important;
             border: none;
-            padding: 12px 18px;
-            border-radius: 30px;
-            font-size: 16px;
+            padding: 0;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: none;
         }
 
         #whatsapp-float img {
+            height: 96px;
+            /* ajuste o tamanho conforme necessário */
+            width: 96px;
             vertical-align: middle;
         }
 
