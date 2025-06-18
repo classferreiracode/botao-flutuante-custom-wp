@@ -3,7 +3,7 @@
 Plugin Name: Botão WhatsApp com Formulário Avançado
 Plugin URI: https://github.com/classferreiracode/botao-flutuante-custom-wp
 Description: Formulário flutuante customizável com envio externo ou WhatsApp, e atualizações via GitHub.
-Version: 1.3
+Version: 1.4.1
 Author: classFerreiraCode
 Author URI: https://github.com/classferreiracode/
 */
@@ -109,13 +109,13 @@ add_action('wp_footer', function () {
     $style_pos = $posicoes[$posicao] ?? $posicoes['bottom-right'];
 
     echo "<div id='whatsapp-float' style='{$style_pos}'>";
-    echo "<button onclick='openForm()'>";
+    echo "<a onclick='openForm()' style='cursor:pointer;'>";
     if ($imagem) {
         echo "<img src='{$imagem}' alt='Ícone' style='height:96px;width:96px;'>";
     } else {
         echo "<img src='https://analiza.amzmp.com.br/icones/icons8-whatsapp-96.png' alt='Ícone' style='height:96px;width:96px;'>";
     }
-    echo "</button></div>";
+    echo "</a></div>";
 
     echo "<div id='form-modal' class='hidden'><div class='form-content'>";
     echo "<form id='WebToLeadForm' action='{$action}' method='POST' target='_blank'>";
