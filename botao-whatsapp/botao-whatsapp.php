@@ -3,7 +3,7 @@
 Plugin Name: Botão WhatsApp com Formulário Avançado
 Plugin URI: https://github.com/classferreiracode/botao-flutuante-custom-wp
 Description: Formulário flutuante customizável com envio externo ou WhatsApp, e atualizações via GitHub.
-Version: 1.5
+Version: 1.6.4
 Author: classFerreiraCode
 Author URI: https://github.com/classferreiracode/
 */
@@ -31,7 +31,7 @@ add_action('admin_init', function () {
     register_setting('botao_whatsapp_v6_options', 'botao_whatsapp_v6_fields_json');
     register_setting('botao_whatsapp_v6_options', 'botao_whatsapp_v6_posicao');
     register_setting('botao_whatsapp_v6_options', 'botao_whatsapp_v6_imagem');
-    register_setting('botao_whatsapp_v6_options', 'botao_whatsapp_v6_whatsapp_number');
+    register_setting('botao_whatsapp_v6_options', 'botao_whatsapp_v6_numero');
     register_setting('botao_whatsapp_v6_options', 'botao_whatsapp_v6_texto_msg');
 });
 
@@ -55,8 +55,8 @@ function botao_whatsapp_v6_config_page()
                     <td><input type="text" name="botao_whatsapp_v6_imagem" value="<?php echo esc_attr(get_option('botao_whatsapp_v6_imagem')); ?>" class="regular-text" /></td>
                 </tr>
                 <tr>
-                    <th><label for="botao_whatsapp_v6_whatsapp_number">Número do WhatsApp</label></th>
-                    <td><input type="text" name="botao_whatsapp_v6_whatsapp_number" value="<?php echo esc_attr(get_option('botao_whatsapp_v6_whatsapp_number')); ?>" class="regular-text" /></td>
+                    <th><label for="botao_whatsapp_v6_numero">Número do WhatsApp (com DDI e DDD)</label></th>
+                    <td><input type="text" name="botao_whatsapp_v6_numero" value="<?php echo esc_attr(get_option('botao_whatsapp_v6_numero')); ?>" class="regular-text" /></td>
                 </tr>
                 <tr>
                     <th><label for="botao_whatsapp_v6_texto_msg">Texto da Mensagem no WhatsApp</label></th>
@@ -81,10 +81,7 @@ function botao_whatsapp_v6_config_page()
   {"id": "first_name", "label": "Primeiro Nome", "type": "text", "required": true},
   {"id": "last_name", "label": "Sobrenome", "type": "text", "required": true},
   {"id": "phone_mobile", "label": "Telefone", "type": "text", "required": true},
-  {"id": "email1", "label": "Email", "type": "email", "required": true},
-  {"id": "campaign_id", "type": "hidden", "value": "4d0109a5-fdc3-14c0-4672-6842e46e0ed8"},
-  {"id": "assigned_user_id", "type": "hidden", "value": "1"},
-  {"id": "moduleDir", "type": "hidden", "value": "Leads"}
+  {"id": "email1", "label": "Email", "type": "email", "required": true}
 ]')); ?></textarea>
                     </td>
                 </tr>
@@ -97,11 +94,11 @@ function botao_whatsapp_v6_config_page()
 
 // Exibição no site
 add_action('wp_footer', function () {
-    $action = esc_url(get_option('botao_whatsapp_v6_action_url', '#'));
+    $action = esc_url(get_option('botao_whatsapp_v6_action_url', ''));
     $posicao = get_option('botao_whatsapp_v6_posicao', 'bottom-right');
     $imagem = esc_url(get_option('botao_whatsapp_v6_imagem', ''));
     $msg = urlencode(get_option('botao_whatsapp_v6_texto_msg', 'Olá, gostaria de mais informações!'));
-    $whatsapp_number = esc_attr(get_option('botao_whatsapp_v6_whatsapp_number', ''));
+    $whatsapp_number = get_option('botao_whatsapp_v6_numero', '');
     $fields_json = get_option('botao_whatsapp_v6_fields_json', '[]');
     $fields = json_decode($fields_json, true);
     if (!is_array($fields)) return;
